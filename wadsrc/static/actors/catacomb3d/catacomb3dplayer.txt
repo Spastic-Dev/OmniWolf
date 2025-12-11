@@ -1,0 +1,69 @@
+// Define the new Player Class
+// We inherit from the standard ECWolfPlayer to ensure all base functionality (like controls, health, inventory) is present.
+ACTOR Petton : ECWolfPlayer
+{
+  // ----------------------------------------------------
+  // Core Definitions
+  // ----------------------------------------------------
+  
+  // Sets the actor's internal name, used in map lumps, save games, etc.
+  //$IncludePlayer "Petton" 
+  
+  // The name shown in the Player Setup Menu.
+  //$PlayerName "Petton Everhail" 
+  
+  // The name displayed in the status bar/menus (shorter).
+  //$AltPlayerName "Petton" 
+  
+  // The actor is selectable in the player setup menu.
+  +PLAYERPAWN
+  
+  // Set the starting health, typical for Catacomb 3-D (though you may adjust based on your mod).
+  Health 100 
+  
+  // Sets the internal player number for this class (not always needed, but good practice)
+  Player.PlayerNum 0 
+  
+  // Catacomb 3-D is a fantasy setting, so we'll use a fantasy/wizard theme.
+  // Replace these with actual graphics/sounds if you have them.
+  // The sprites here are placeholders (often taken from Wolf3D/Doom if not specifically defined).
+  
+  // ----------------------------------------------------
+  // Graphics and States (Placeholders)
+  // ----------------------------------------------------
+  
+  // The standing frame/animation (C3D might use graphics like P_S_CAT)
+  States
+  {
+  Spawn:
+    PLAY A 1
+    Loop
+    
+  See:
+    PLAY AABBCCDD 4
+    Loop
+    
+  // You would typically define more states here: Walk, Pain, Death, etc.
+  // Since we inherit from ECWolfPlayer, it will fall back to the engine's default
+  // WolfPlayer states if these are not defined, or if you don't have the sprites.
+  }
+  
+  // ----------------------------------------------------
+  // Weapon/Inventory Setup (Catacomb 3-D specific)
+  // ----------------------------------------------------
+
+  // Catacomb 3-D starts with the player's "Magick Missile" (Bolt) in hand.
+  // If your mod defines a Catacomb weapon, you'd specify it here.
+  // Example: Player.StartItem "MagicBoltWeapon" 
+  
+  // You can set the starting items/ammo here.
+  // Catacomb 3-D uses Bolts as its main projectile/ammo.
+  // Example: Player.StartItem "CatacombBolt", 100 
+}
+
+// ----------------------------------------------------
+// Set the default player to Petton
+// ----------------------------------------------------
+
+// This line makes Petton the default player character when starting a new game.
+DefaultPlayer "Petton"
