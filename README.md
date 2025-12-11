@@ -22,4 +22,4 @@ Mod authoring
 * Unlimited things.
 * Unrestricted map size. (Although technical limits restrict GAMEMAPS format to 181x181.)
 * Uses scripting formats and data formats similar to those of ZDoom.
-    * Doom editing utilities work with ECWolf. (Except for levels)
+    * Doom editing utilities work with OmniWolf. (Except for levels)
