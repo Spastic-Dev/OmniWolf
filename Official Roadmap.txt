@@ -1,0 +1,107 @@
+fficial OmniWolf Roadmap: Expanded Classic Shooter Support
+
+Project Vision: To establish OmniWolf as the definitive, modern, and unified source port for the classic ID Tech 0 and related pseudo-3D first-person shooters, serving as the "Raze" for the Wolfenstein 3D era.
+
+Current Status: OmniWolf currently provides robust, modern support for Wolfenstein 3D and is preparing for the inaugural expansion with the integration of Depth Dwellers. This foundational work proves the engine’s capacity to handle divergent data structures from the 1990s era of shareware and licensed 3D games.
+
+Phase I: Core Engine Unification & Depth Dwellers Deployment (Q4 2025)
+
+The primary goal of Phase I is to fully stabilize the platform, complete the integration of the first expansion game, and establish the technical groundwork necessary for future titles.
+
+Milestone
+
+Description
+
+Key Deliverables
+
+1.1 Depth Dwellers Integration
+
+Finalize data parsing, mapping, and asset reconciliation for the Depth Dwellers engine structure.
+
+Full, stable support for Depth Dwellers.
+
+1.2 Cross-Game Engine Wrapper
+
+Develop a scalable core wrapper to allow OmniWolf to dynamically load assets and logic from different game engines (Wolf3D, Depth Dwellers, etc.) without recompilation.
+
+Unified UI for selecting supported games.
+
+1.3 Modern Control Parity
+
+Implement full native mouse-look, jumping, and crouching across all supported titles, even where originally unsupported.
+
+Seamless modern controls regardless of the loaded game.
+
+1.4 Renderer Stabilization
+
+Ensure the current OpenGL/Vulkan renderer is perfectly stable across all supported platforms (Windows, Linux, macOS).
+
+Elimination of all known rendering artifacts/bugs.
+
+Phase II: The Wolf3D Engine Family Expansion (H1 2026)
+
+Phase II focuses on bringing in other foundational titles that share the core technological DNA of Wolfenstein 3D and its immediate successors, expanding OmniWolf’s library significantly.
+
+Milestone
+
+Description
+
+Target Games (Examples)
+
+2.1 Blake Stone Engine Integration
+
+Support the Blake Stone: Aliens of Gold and Planet Strike engine structure, including elevators, keycard systems, and map formats.
+
+Blake Stone: Aliens of Gold, Blake Stone: Planet Strike.
+
+2.2 Secondary ID Tech 0 Titles
+
+Support licensed and derivative engines built on the Wolfenstein 3D code base.
+
+Spear of Destiny, Operation Bodycount, Corridor 7.
+
+2.3 Advanced Graphics Features
+
+Introduce optional high-resolution textures, dynamic lighting (shadow maps), and improved particle systems to modernize the visuals of all supported titles.
+
+Optional texture packs and lighting toggle in the settings menu.
+
+2.4 WAD/PAK Mod Support
+
+Implement a flexible mod loading system similar to modern DOOM ports (ZIP, WAD, PK3) to simplify community-created content installation.
+
+Mod folder detection and in-game mod selection UI.
+
+Phase III: The OmniVerse and Community Tools (H2 2026+)
+
+The final phase solidifies OmniWolf’s role as the definitive platform, introducing power-user features, cross-platform stability, and modding tools.
+
+Milestone
+
+Description
+
+Key Deliverables
+
+3.1 In-Engine Scripting (ZenScript/Lua)
+
+Implement an accessible scripting language to allow modders to create complex new gameplay mechanics, custom enemies, and HUDs without needing to recompile the engine.
+
+Tutorial documentation and example scripts for community use.
+
+3.2 Cross-Platform Multi-Player
+
+Implement modern client-server network code for Deathmatch and Cooperative play across all supported Phase II titles.
+
+Stable netcode with lobby support (LAN and Internet).
+
+3.3 Future Engine Investigation
+
+Begin research and proof-of-concept work for supporting the Catacomb 3D and Hovertank 3D engines (the ID Tech 0 predecessor).
+
+Internal review and feasibility study report.
+
+3.4 Engine Licensing Cleanup
+
+Ensure all open-source licensing (GPL, etc.) is correctly attributed and consolidated for legal stability as the project grows.
+
+Comprehensive license file update.
