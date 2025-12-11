@@ -1,0 +1,98 @@
+CAN, TSHL, ROCK, BOOM, etc.) with your actual sprite names (ECWolf sprites are 4-character names). The code is written to be ECWolf-friendly (uses PlayerPawn inheritance and A_CustomMissile).
+
+// -------------------------------
+// Hovertank player class
+// -------------------------------
+actor HovertankPlayer : PlayerPawn
+{
+    Health 300
+    Radius 30
+    Height 48
+    speed 1.3
+    player.viewheight 36
+    player.forwardmove 1, 1
+    player.sidemove 1, 1
+    player.maxhealth 300
+    player.movebob 0.6
+    player.displayname "Hovertank"
+    // Give the player the TankCannon at start
+    player.startitem "TankCannon"
+    player.weaponslot 1, "TankCannon"
+    // Optional: start with some ammo item name if you define one
+    // player.startitem "ShellAmmo", 8
+
+    +SOLID
+    +SHOOTABLE
+    +PICKUP
+
+    states
+    {
+      Spawn:
+        HOVR A 1 NOP
+        stop
+
+      Death:
+        TNT1 A -1 A_Fall
+        stop
+    }
+}
+
+// -------------------------------
+// Tank Cannon (player weapon)
+// -------------------------------
+actor TankCannon : WolfWeapon
+{
+    weapon.ammotype1 "None" // or "Clip"/"ShellAmmo" if you add ammo
+    weapon.ammogive1 0
+    weapon.ammouse1 1
+    weapon.yadjust 0
+    weapon.bobrangex 1.0
+    weapon.bobrangey 1.0
+    player.useammo false
+
+    // display in weapon menu as "Tank Cannon"
+    inventory.pickupsound "misc/w_pkup"
+
+    states
+    {
+      Ready:
+        TCAN A 1 NOP
+        loop
+
+      Select:
+        TCAN A 1 NOP
+        stop
+
+      Deselect:
+        TCAN A 1 NOP
+        stop
+
+      Fire:
+        TCAN B 0.5 BRIGHT A_CustomMissile("TankShell", 32, 0)
+        TCAN B 6 NOP
+        goto Ready
+    }
+}
+
+// -------------------------------
+// Tank projectile
+// -------------------------------
+actor TankShell
+{
+    Radius 10
+    Speed 20
+    Damage (random[MissileDamage](40, 80))
+    SeeSound "missile/fire"
+    DeathSound "missile/hit"
+    PROJECTILE
+    states
+    {
+      Spawn:
+        TSHL A 1 BRIGHT
+        loop
+
+      Death:
+        BOOM ABC 3 BRIGHT
+        stop
+    }
+}
