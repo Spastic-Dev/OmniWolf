@@ -1,0 +1,57 @@
+//
+// Hovertank Player Base Class (hovertankplayer.con)
+//
+// Defines the core actor structure for all ROTT playable characters (Ian, Lorelei, Doug, Thi).
+// This class is intended to be the base for the specific player classes defined 
+// and configured in the 'rottplayers.lua' script via the OmniWolf Lua API.
+//
+// Base Class: PlayerPawn
+ACTOR HovertankPlayer : PlayerPawn
+{
+    // --- CORE PROPERTIES ---
+    Health 100
+    Speed 1.0 // Base speed, overridden by Lua per character
+    Radius 20
+    Height 56
+    Mass 100
+    
+    // Flags for standard player movement and interaction
+    +SOLID
+    +FORCEXYACEL
+    +USEACTIVATES
+    +JUMPDASHSOUND
+    
+    // --- INVENTORY CAPACITY (Linking to rottammo.lua) ---
+    // Ensure the player can hold the defined ammo types
+    MaxInventory ROTT_BulletAmmo, 500
+    MaxInventory ROTT_ExplosiveAmmo, 50
+    
+    // --- VISUAL STATES (Using placeholder sprites) ---
+    States
+    {
+      Spawn:
+        PLAY A 10 A_Look // Idle state
+        Loop
+        
+      Ready:
+        PLAY A 1 A_WeaponReady // Ready to fire
+        Loop
+        
+      Run:
+        PLAY AABBCCDD 3 A_SetFOV(5) // Walking/Running animation sequence
+        Loop
+        
+      Pain:
+        PLAY E 4
+        PLAY E 4 A_Pain
+        Goto Ready
+        
+      Death:
+        PLAY F 5 A_Scream
+        PLAY G 5 A_NoBlocking // Set non-solid
+        PLAY H 5
+        PLAY I 5
+        PLAY J -1 // Final death frame
+        Stop
+    }
+}
