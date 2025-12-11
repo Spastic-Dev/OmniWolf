@@ -1,0 +1,106 @@
+//==============================================================
+// DECORATE definition for Nemesis, the Evil Lich (Boss)
+//
+// Nemesis uses a powerful, slow-moving magic projectile attack.
+// Sprite prefixes used are NEME and MAGIC (placeholders).
+//==============================================================
+
+// ----------------------------------------------------
+// 1. Nemesis (The Boss)
+// ----------------------------------------------------
+ACTOR Nemesis : WolfEnemy
+{
+  //$Category "Catacomb Bosses"
+  //$Title "Nemesis the Lich"
+  
+  Health 500              // Significant health pool for a boss fight
+  Speed 4                 // Very slow moving, relies on attacks
+  Radius 20               // Larger collision box
+  Height 56
+  Mass 500
+  Damage 0                // Does not inflict physical damage, only projectile
+  
+  // Sounds (Placeholders)
+  SeeSound "nemesis/see"
+  AttackSound "nemesis/chant" // Sound for charging/casting the spell
+  DeathSound "nemesis/die"
+  PainSound "nemesis/pain"
+  
+  // Boss flag to display the boss health bar (OmniWolf/ECWolf feature)
+  +BOSS
+  
+  // Only uses ranged attacks
+  +NEVERMELEE
+  
+  // The lich should float, ignoring height checks and gravity
+  +FLOAT
+  +NOGRAVITY
+  
+  // Custom attack function will spawn the projectile
+  AttackDelay 70          // Slow attack cadence (wait time between attacks)
+  
+  States
+  {
+  Spawn:
+    NEME A 10
+    Loop
+    
+  See:
+    // Nemesis slowly floats around
+    NEME AABBCDDC 3 A_Wander
+    Loop
+    
+  Missile:
+    // Charge up attack
+    NEME E 6 A_FaceTarget
+    NEME F 6 A_FaceTarget
+    NEME G 6 A_FaceTarget
+    
+    // Fire the projectile (using the LichMagicMissile actor)
+    NEME H 6 A_CustomMeleeOrRangeAttack("LichMagicMissile") 
+    
+    // Return to wandering/floating
+    Goto See
+    
+  Pain:
+    NEME I 4
+    NEME I 4 A_WolfPain
+    Goto See
+    
+  Death:
+    // Impressive death sequence
+    NEME J 8
+    NEME K 8
+    NEME L 8 A_NoBlocking    // Remove collision before final frames
+    NEME M 8 A_WolfDie       // Boss death effect/message
+    NEME N 8
+    NEME O 8
+    Stop
+  }
+}
+
+// ----------------------------------------------------
+// 2. Nemesis's Projectile (Powerful, Slow-moving Magic)
+// ----------------------------------------------------
+ACTOR LichMagicMissile
+{
+  Radius 8
+  Height 8
+  Speed 14              // Slower than the Fireball, but more powerful
+  Damage 20             // High damage projectile
+  Projectile
+  +BRIGHT               // Ensures the projectile glows
+  
+  // Use a custom sprite prefix for the lich's magic
+  States
+  {
+  Spawn:
+    MAGIC AABBCCDD 4 Bright
+    Loop
+    
+  Death:
+    // A larger, flashier explosion for the boss projectile
+    PUFF EFGH 4 Bright
+    Stop
+  }
+}
