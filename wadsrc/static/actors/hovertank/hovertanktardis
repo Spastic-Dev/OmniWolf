@@ -1,0 +1,35 @@
+// =========================================================================
+// HOVERTANK 3D "TARDIS" (EXIT TELEPORTER) FOR OMNIWOLF
+// =========================================================================
+// This actor functions as the level exit. 
+// It is defined as an inventory item so that when the player touches it,
+// it "picks up" the event and triggers the end of the level.
+// =========================================================================
+
+actor HovertankExit : CustomInventory
+{
+    Game Wolf3D
+    Radius 32          // Wide radius to ensure easy activation
+    Height 64
+    +ALWAYSPICKUP      // Activates immediately upon touch
+    +FLOATBOB          // Optional: Makes it bob slightly like a powerup
+    Inventory.Amount 0
+    Inventory.MaxAmount 0
+    Inventory.PickupMessage "Level Complete!"
+    Inventory.PickupSound "misc/teleport" // Define this sound in SNDINFO
+    States
+    {
+    Spawn:
+        // Animation: Spinning/Flashing Teleporter
+        // Assumes sprites are named TRDSA0, TRDSB0, etc.
+        TRDS A 4 Bright
+        TRDS B 4 Bright
+        TRDS C 4 Bright
+        TRDS D 4 Bright
+        Loop
+    Pickup:
+        // The action triggered when the player touches the gate
+        TNT1 A 0 A_Exit // Ends the level and goes to stats/intermission
+        Stop
+    }
+}
