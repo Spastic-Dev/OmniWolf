@@ -1,0 +1,175 @@
+//==============================================================
+// DECORATE definitions for Catacomb 3-D Monsters (for OmniWolf)
+//
+// NOTE: These actors inherit from ECWolf's basic enemy structure (WolfEnemy)
+//       and use placeholder sprites (like 'A' and 'B') and sounds.
+//       You MUST ensure your WAD/PK3 contains the appropriate C3D sprites
+//       (e.g., GOBL, TROL, EYE) and sounds for these to function correctly.
+//==============================================================
+
+// ----------------------------------------------------
+// 1. Goblin (The basic cannon fodder enemy)
+// ----------------------------------------------------
+ACTOR CatacombGoblin : WolfEnemy
+{
+  //$Category "Catacomb Monsters"
+  //$Title "Goblin"
+  
+  Health 25             // Slightly weak, fast-moving enemy
+  Speed 12              // Faster than the player's default walk speed
+  Radius 10
+  Height 32
+  Mass 50
+  Damage 2              // Light damage
+  SeeSound "goblin/see" // Placeholder sound for when the enemy spots the player
+  AttackSound "goblin/attack"
+  DeathSound "goblin/die"
+  PainSound "goblin/pain"
+  
+  // Uses a simple melee attack
+  +MELEEATTACK
+  
+  States
+  {
+  Spawn:
+    GOBL A 10
+    Loop
+  See:
+    // Walking animation (you'll need multiple frames for smooth movement)
+    GOBL AABBCCDD 3 A_Wander
+    Loop
+  Pain:
+    GOBL E 3
+    GOBL E 3 A_WolfPain
+    Goto See
+  Melee:
+    // Attack animation sequence
+    GOBL F 6 A_FaceTarget
+    GOBL G 6 A_WolfAttack
+    Goto See
+  Death:
+    // Death sequence
+    GOBL H 6
+    GOBL I 6 A_WolfDie
+    GOBL J 6
+    Stop
+  }
+}
+
+// ----------------------------------------------------
+// 2. Troll (A tougher, mid-level brute)
+// ----------------------------------------------------
+ACTOR CatacombTroll : WolfEnemy
+{
+  //$Category "Catacomb Monsters"
+  //$Title "Troll"
+  
+  Health 70             // Much tougher health pool
+  Speed 8               // Slower but hits harder
+  Radius 15
+  Height 48
+  Mass 150
+  Damage 5              // Heavy damage
+  SeeSound "troll/see"
+  AttackSound "troll/attack"
+  DeathSound "troll/die"
+  PainSound "troll/pain"
+  
+  +MELEEATTACK
+  
+  States
+  {
+  Spawn:
+    TROL A 10
+    Loop
+  See:
+    TROL AABBCCDD 4 A_Wander
+    Loop
+  Pain:
+    TROL E 4
+    TROL E 4 A_WolfPain
+    Goto See
+  Melee:
+    TROL F 8 A_FaceTarget
+    TROL G 8 A_WolfAttack
+    Goto See
+  Death:
+    TROL H 8
+    TROL I 8 A_WolfDie
+    TROL J 8
+    Stop
+  }
+}
+
+// ----------------------------------------------------
+// 3. Evil Eye (The ranged enemy)
+// ----------------------------------------------------
+ACTOR CatacombEvilEye : WolfEnemy
+{
+  //$Category "Catacomb Monsters"
+  //$Title "Evil Eye"
+  
+  Health 50             // Medium health
+  Speed 10              // Standard speed
+  Radius 10
+  Height 30
+  Mass 80
+  Damage 0              // Damage comes from the projectile
+  SeeSound "eye/see"
+  AttackSound "eye/shoot"
+  DeathSound "eye/die"
+  PainSound "eye/pain"
+  
+  // This enemy uses a projectile attack, not melee
+  +NEVERMELEE
+  
+  States
+  {
+  Spawn:
+    EYE A 10
+    Loop
+  See:
+    EYE AABBAA 4 A_Chase
+    Loop
+  Missile:
+    // Prepare to fire
+    EYE F 6 A_FaceTarget
+    // Fire the projectile (needs a separate projectile actor defined)
+    EYE G 6 A_CustomMeleeOrRangeAttack("CatacombFireball") 
+    Goto See
+  Pain:
+    EYE H 4
+    EYE H 4 A_WolfPain
+    Goto See
+  Death:
+    EYE I 8
+    EYE J 8 A_WolfDie
+    EYE K 8
+    Stop
+  }
+}
+
+// ----------------------------------------------------
+// 4. Evil Eye's Projectile (The fireball)
+// ----------------------------------------------------
+// NOTE: The sprite prefix for C3D fireballs is typically FIRE.
+ACTOR CatacombFireball
+{
+  Radius 6
+  Height 6
+  Speed 20              // Fast moving projectile
+  Damage 10             // Standard projectile damage
+  Projectile
+  -NOGRAVITY
+  
+  States
+  {
+  Spawn:
+    FIRE ABC 3 Bright
+    Loop
+  Death:
+    // Simple puff/explosion on impact
+    PUFF ABC 3 Bright
+    Stop
+  }
+}
