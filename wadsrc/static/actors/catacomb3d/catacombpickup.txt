@@ -1,0 +1,98 @@
+//==============================================================
+// DECORATE definitions for Catacomb 3-D Pickups (for OmniWolf)
+//
+// NOTE: These actors use ECWolf's inventory system to add health, ammo, and score.
+//       Sprite prefixes used are BOLT, CURE, and TREA (placeholders).
+//==============================================================
+
+// ----------------------------------------------------
+// 1. Catacomb Bolt (Ammo for the Magick Missile)
+// ----------------------------------------------------
+ACTOR CatacombBolt : WolfPickup
+{
+  //$Category "Catacomb Ammo"
+  //$Title "Magick Bolt (Ammo)"
+  
+  Radius 8
+  Height 16
+  Inventory.Amount 10       // Gives 10 ammo per pickup (adjust as needed)
+  Inventory.MaxAmount 999   // Max amount player can carry
+  Inventory.Icon "BOLTA0"
+  +COUNTITEM
+  
+  // Custom property to define what type of ammo this is
+  Inventory.AmmoType "BoltAmmo" 
+  
+  States
+  {
+  Spawn:
+    BOLT A 6
+    BOLT B 6
+    Loop
+  }
+}
+
+// ----------------------------------------------------
+// Define the Ammo Type (Required if used by weapons)
+// ----------------------------------------------------
+ACTOR BoltAmmo : Ammo
+{
+  // This is just a definition for the ammo type itself.
+  Inventory.MaxAmount 999 
+  Ammo.BackpackAmount 50
+  Ammo.BackpackMaxAmount 999
+}
+
+// ----------------------------------------------------
+// 2. Cure Potion (Small Health Pickup)
+// ----------------------------------------------------
+ACTOR CatacombCurePotion : WolfPickup
+{
+  //$Category "Catacomb Health"
+  //$Title "Cure Potion"
+  
+  Radius 10
+  Height 18
+  Inventory.Amount 10       // Restores 10 points of health
+  Inventory.MaxAmount 100   // Max health limit (standard for Wolf/Doom)
+  Inventory.Icon "CUREA0"
+  +COUNTITEM
+  
+  // This acts as a Medikit/Health item
+  Inventory.InteractsWith "Health" 
+  
+  States
+  {
+  Spawn:
+    CURE A 8
+    CURE B 8
+    Loop
+  }
+}
+
+// ----------------------------------------------------
+// 3. Treasure Chest (Score/Points Pickup)
+// ----------------------------------------------------
+ACTOR CatacombTreasureChest : WolfPickup
+{
+  //$Category "Catacomb Score"
+  //$Title "Treasure Chest"
+  
+  Radius 12
+  Height 20
+  Mass 100
+  Inventory.Amount 500      // Gives 500 points (adjust score value as needed)
+  Inventory.MaxAmount 999999
+  Inventory.Icon "TREAA0"
+  
+  // This item adds to the player's score
+  Inventory.InteractsWith "Score" 
+  +COUNTITEM
+  
+  States
+  {
+  Spawn:
+    TREA A 10
+    Loop
+  }
+}
