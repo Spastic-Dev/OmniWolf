@@ -1,10 +1,9 @@
-ECWolf
+OmniWolf
 ======
 
-ECWolf is a port of the Wolfenstein 3D engine based of Wolf4SDL. It combines the original Wolfenstein 3D engine with the user experience of ZDoom to create the most user and mod author friendly Wolf3D source port.
+OmniWolf is a port of the Wolfenstein 3D engine based of Wolf4SDL. It combines the original Wolfenstein 3D engine with the user experience of ZDoom to create the most user and mod author friendly Wolf3D source port.
 
-Like ZDoom, ECWolf aims to support all games which use the Wolfenstein 3D engine including Blake Stone (coming in ECWolf 3.0), Corridor 7, Operation Body Count, Rise of the Triad, and Super 3D Noah's Ark.  ECWolf will also support Macintosh Wolfenstein 3D along with all of its user created missions (coming in ECWolf 2.0).
-
+Like ECWolf and ZDoom, OmniWolf aims to support all games which use the Wolfenstein 3D engine including Blake Stone, Corridor 7, Operation Body Count, Rise of the Triad, Raven Engine Games, and Super 3D Noah's Ark.
 * Single binary runs all supported games.  (Wolfenstein 3D, Spear of Destiny, ...)
 * Full support for high resolution modes with aspect ratio correction including wide screen support.
 * Modern control schemes (WASD + mouse).
@@ -24,12 +23,3 @@ Mod authoring
 * Unrestricted map size. (Although technical limits restrict GAMEMAPS format to 181x181.)
 * Uses scripting formats and data formats similar to those of ZDoom.
     * Doom editing utilities work with ECWolf. (Except for levels)
-
-Note that until ECWolf 2.0, while radical changes are not excepted, backwards compatibility for mods will not necessarily be kept.  See [the wiki](http://maniacsvault.net/ecwolf/wiki/Version_compatibility) for more information.
-
-Links
------
-
-* [Website](http://maniacsvault.net/ecwolf/)
-* [Forums](http://forum.drdteam.org/viewforum.php?f=174)
-* [Wiki](http://maniacsvault.net/ecwolf/wiki/)
