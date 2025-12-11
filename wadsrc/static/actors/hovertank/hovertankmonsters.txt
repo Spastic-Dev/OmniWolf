@@ -1,0 +1,181 @@
+// =========================================================================
+// HOVERTANK 3D MONSTER DEFINITIONS FOR OMNIWOLF
+// =========================================================================
+
+// -------------------------------------------------------------------------
+// 1. HOVERTANK 3D PROJECTILES
+// -------------------------------------------------------------------------
+
+actor HoverTankShell
+{
+    Radius 8
+    Height 8
+    Speed 25
+    Damage 15
+    Projectile
+    +RANDOMIZE
+    RenderStyle Normal
+    SeeSound "missile/fire"    // Replace with Hovertank "fire" sound if available
+    DeathSound "missile/hit"   // Replace with Hovertank explosion sound
+    States
+    {
+    Spawn:
+        MISL A 4               // Uses standard rocket sprite. Rename to custom if needed.
+        Loop
+    Death:
+        MISL B 8
+        MISL C 6
+        MISL D 4
+        Stop
+    }
+}
+
+// -------------------------------------------------------------------------
+// 2. THE SQUID (DRONE)
+// Description: Fast, erratically moving melee enemy.
+// -------------------------------------------------------------------------
+
+actor HoverSquid 
+{
+    Health 40                  // Roughly equal to a Guard
+    Radius 24
+    Height 64
+    Speed 18                   // Faster than average Wolf3D guard
+    PainChance 180
+    Monster
+    +SOLID
+    +SHOOTABLE
+    +AMBUSH
+    +FLOORCLIP
+    SeeSound "squid/sight"     // Define these in SNDINFO
+    DeathSound "squid/death"
+    AttackSound "squid/attack"
+    States
+    {
+    Spawn:
+        SQID A 10 A_Look
+        Loop
+    See:
+        SQID A 3 A_Chase
+        SQID A 3 A_Chase
+        SQID B 3 A_Chase
+        SQID B 3 A_Chase
+        Loop
+    Melee:
+        SQID C 6 A_FaceTarget
+        SQID D 6 A_CustomMelee(5, "squid/attack") // Deals 5 damage
+        SQID C 6
+        Goto See
+    Pain:
+        SQID E 3
+        SQID E 3 A_Pain
+        Goto See
+    Death:
+        SQID F 5
+        SQID G 5 A_Scream
+        SQID H 5 A_NoBlocking
+        SQID I 5
+        SQID J -1
+        Stop
+    }
+}
+
+// -------------------------------------------------------------------------
+// 3. THE RED GARGOYLE (DEMON)
+// Description: Tougher than the Squid, fires energy bolts or moves quickly.
+// -------------------------------------------------------------------------
+
+actor HoverGargoyle
+{
+    Health 80                  // Between SS and Officer
+    Radius 24
+    Height 64
+    Speed 14
+    PainChance 100
+    Monster
+    +SOLID
+    +SHOOTABLE
+    +AMBUSH
+    SeeSound "gargoyle/sight"
+    DeathSound "gargoyle/death"
+    ActiveSound "gargoyle/active"
+    States
+    {
+    Spawn:
+        GARG A 10 A_Look
+        Loop
+    See:
+        GARG A 3 A_Chase
+        GARG A 3 A_Chase
+        GARG B 3 A_Chase
+        GARG B 3 A_Chase
+        Loop
+    Missile:
+        GARG C 8 A_FaceTarget
+        GARG D 8 A_WolfAttack(0, "gargoyle/attack", 1.0) // Hitscan attack with sound
+        GARG C 8
+        Goto See
+    Pain:
+        GARG E 3
+        GARG E 3 A_Pain
+        Goto See
+    Death:
+        GARG F 5
+        GARG G 5 A_Scream
+        GARG H 5 A_NoBlocking
+        GARG I 5
+        GARG J -1
+        Stop
+    }
+}
+
+// -------------------------------------------------------------------------
+// 4. ENEMY HOVERTANK
+// Description: The heavy hitter. Slow movement, high health, projectile fire.
+// -------------------------------------------------------------------------
+
+actor EnemyHovertank
+{
+    Health 250                 // Very durable
+    Radius 40                  // Larger hit box
+    Height 64
+    Speed 8                    // Slow and heavy
+    PainChance 20              // Rarely flinches
+    Monster
+    +SOLID
+    +SHOOTABLE
+    +AMBUSH
+    +NOBLOOD                   // Tanks bleed metal/sparks, or nothing
+    SeeSound "tank/sight"
+    DeathSound "tank/death"
+    ActiveSound "tank/engine"
+    States
+    {
+    Spawn:
+        HTNK A 10 A_Look
+        Loop
+    See:
+        HTNK A 4 A_Chase
+        HTNK A 4 A_Chase
+        HTNK B 4 A_Chase
+        HTNK B 4 A_Chase
+        Loop
+    Missile:
+        HTNK C 10 A_FaceTarget
+        HTNK D 10 Bright A_CustomMissile("HoverTankShell", 32, 0, 0)
+        HTNK C 10
+        Goto See
+    Pain:
+        HTNK E 3
+        HTNK E 3 A_Pain
+        Goto See
+    Death:
+        HTNK F 6
+        HTNK G 6 A_Scream
+        HTNK H 6 A_NoBlocking
+        HTNK I 6
+        HTNK J 6
+        HTNK K -1
+        Stop
+    }
+}
