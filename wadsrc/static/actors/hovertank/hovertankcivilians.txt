@@ -1,0 +1,81 @@
+// =========================================================================
+// HOVERTANK 3D CIVILIAN/HOSTAGE DEFINITIONS FOR OMNIWOLF
+// =========================================================================
+// These actors are defined as CustomInventory. 
+// This allows the player to "collect" (rescue) them by walking into them.
+// =========================================================================
+
+// -------------------------------------------------------------------------
+// 1. MALE CIVILIAN (Brick Sledge's target)
+// Description: Jumpsuit-wearing hostage. Waving animation.
+// -------------------------------------------------------------------------
+
+actor HoverCivilianMale : CustomInventory
+{
+    Game Wolf3D
+    Radius 20
+    Height 64
+    +ALWAYSPICKUP          // Ensures the pickup state triggers immediately on touch
+    +COUNTITEM             // Counts towards the "Items" percentage at end of level (optional)
+    Inventory.Amount 0     // Doesn't actually add an item to inventory
+    Inventory.MaxAmount 0
+    Inventory.PickupMessage "Male Hostage Rescued!"
+    Inventory.PickupSound "hostage/rescue"  // Define in SNDINFO
+    States
+    {
+    Spawn:
+        // Waving animation loop
+        CIVM A 10
+        CIVM B 10
+        CIVM A 10
+        CIVM C 10
+        Loop
+    Pickup:
+        // What happens when rescued
+        TNT1 A 0 A_GiveInventory("Score", 500) // Give 500 points
+        Stop
+    }
+}
+
+// -------------------------------------------------------------------------
+// 2. FEMALE CIVILIAN
+// Description: Red dress hostage. Waving animation.
+// -------------------------------------------------------------------------
+
+actor HoverCivilianFemale : CustomInventory
+{
+    Game Wolf3D
+    Radius 20
+    Height 64
+    +ALWAYSPICKUP
+    +COUNTITEM
+    Inventory.Amount 0
+    Inventory.MaxAmount 0
+    Inventory.PickupMessage "Female Hostage Rescued!"
+    Inventory.PickupSound "hostage/rescue"
+    States
+    {
+    Spawn:
+        // Waving animation loop
+        CIVF A 10
+        CIVF B 10
+        CIVF A 10
+        CIVF C 10
+        Loop
+    Pickup:
+        // What happens when rescued
+        TNT1 A 0 A_GiveInventory("Score", 500) // Give 500 points
+        Stop
+    }
+}
+
+// -------------------------------------------------------------------------
+// 3. RANDOM CIVILIAN SPAWNER (Optional)
+// Use this in your map editor to randomly spawn a Male or Female
+// -------------------------------------------------------------------------
+
+actor RandomHoverCivilian : RandomSpawner
+{
+    DropItem "HoverCivilianMale"
+    DropItem "HoverCivilianFemale"
+}
